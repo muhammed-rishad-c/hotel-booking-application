@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Hotel Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #eee;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #111;
+            padding: 1.5rem; /* Increased padding for larger navbar */
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            font-size: 1.5rem; /* Increased font size for larger navbar */
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .navbar-brand:hover {
+            color: #ffc107 !important;
+            transform: scale(1.1);
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-size: 1.3rem; /* Increased font size for larger navbar */
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        .container {
+            margin-top: 2rem;
+            color: #eee;
+        }
+
+        .edit-form {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .edit-form:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .edit-form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #ffc107;
+        }
+
+        .edit-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #bbb;
+        }
+
+        .edit-form input[type="text"],
+        .edit-form input[type="tel"],
+        .edit-form input[type="email"],
+        .edit-form input[type="number"],
+        .edit-form textarea,
+        .edit-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #444;
+            color: #fff;
+        }
+
+        .edit-form input[type="text"]:focus,
+        .edit-form input[type="tel"]:focus,
+        .edit-form input[type="email"]:focus,
+        .edit-form input[type="number"]:focus,
+        .edit-form textarea:focus,
+        .edit-form button:focus {
+            outline: none;
+            background-color: #555;
+            border-color: #ffc107;
+        }
+
+        .edit-form button {
+            background-color: #ffc107;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .edit-form button:hover {
+            background-color: #ff6b81;
+            transform: scale(1.05);
+        }
+
+        /* Remove blue underline from links on hover */
+        a:hover {
+            text-decoration: none !important;
+            color: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Admin Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/admin-index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/upload">Upload Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/orders">Check Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="edit-form">
+            <h2>Edit Hotel Details</h2>
+            <form action="/admin/update/<%= hotel.id %>" method="POST" enctype="multipart/form-data">
+                <label for="ownername">Owner Name:</label>
+                <input type="text" id="ownername" name="ownername" value="<%= hotel.ownername %>" required>
+
+                <label for="hotelname">Hotel Name:</label>
+                <input type="text" id="hotelname" name="hotelname" value="<%= hotel.hotelname %>" required>
+
+                <label for="hotelphoto">Hotel Photo:</label>
+                <input type="file" id="hotelphoto" name="hotelphoto">
+
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required><%= hotel.description %></textarea>
+
+                <label for="phonenumber">Phone Number:</label>
+                <input type="tel" id="phonenumber" name="phonenumber" value="<%= hotel.phonenumber %>" required>
+
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" value="<%= hotel.price %>" required>
+
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" value="<%= hotel.location %>" required>
+
+                <button type="submit">Update Hotel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Order Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #111;
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.8em;
+            color: #fff !important;
+            transition: font-size 0.3s, color 0.3s;
+        }
+
+        .navbar-brand:hover {
+            font-size: 2em;
+            color: #ff4757 !important;
+        }
+
+        .nav-link {
+            font-size: 1.2em;
+            color: #fff !important;
+            transition: font-size 0.3s, color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #333;
+            border-radius: 5px;
+            font-size: 1.4em;
+        }
+
+        .container {
+            margin-top: 20px;
+            max-width: 800px;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .order-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .order-details div {
+            flex: 1 1 45%;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .order-details div:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+        }
+
+        .order-details h4 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .order-details p {
+            margin: 0;
+            font-size: 1em;
+            color: #bbb;
+            transition: color 0.3s;
+        }
+
+        .order-details p:hover {
+            color: #ff4757;
+        }
+
+        .btn-home {
+            margin-top: 20px;
+            background-color: #ff4757;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-home:hover {
+            background-color: #ff6b81;
+            transform: scale(1.05);
+        }
+
+        .form-inline .form-control {
+            background-color: #444;
+            color: #fff;
+            border: none;
+        }
+
+        .form-inline .btn-outline-success {
+            color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .form-inline .btn-outline-success:hover {
+            background-color: #6c757d;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#">Hotel Rooms</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/user/user-index">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/orders">Orders</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/user-whistlist">Wishlist</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/log-out">Log out</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+    <div class="container">
+        <h2>Last Order Details</h2>
+        <div class="order-details">
+            <div>
+                <h4>Order ID:</h4>
+                <p><%= order.id %></p>
+            </div>
+            <div>
+                <h4>Hotel Name:</h4>
+                <p><%= order.hotelName %></p>
+            </div>
+            <div>
+                <h4>Price:</h4>
+                <p>$<%= order.price %></p>
+            </div>
+            <div>
+                <h4>First Name:</h4>
+                <p><%= order.firstName %></p>
+            </div>
+            <div>
+                <h4>Last Name:</h4>
+                <p><%= order.lastName %></p>
+            </div>
+            <div>
+                <h4>Email:</h4>
+                <p><%= order.email %></p>
+            </div>
+            <div>
+                <h4>Phone Number:</h4>
+                <p><%= order.phoneNumber %></p>
+            </div>
+            <div>
+                <h4>Check-In Date:</h4>
+                <p><%= new Date(order.checkInDate).toLocaleDateString() %></p>
+            </div>
+            <div>
+                <h4>Check-Out Date:</h4>
+                <p><%= new Date(order.checkOutDate).toLocaleDateString() %></p>
+            </div>
+            <div>
+                <h4>Room Type:</h4>
+                <p><%= order.roomType %></p>
+            </div>
+            <div>
+                <h4>Number of Guests:</h4>
+                <p><%= order.numGuests %></p>
+            </div>
+            <div>
+                <h4>Name on Card:</h4>
+                <p><%= order.cardName %></p>
+            </div>
+            <div>
+                <h4>Card Number:</h4>
+                <p><%= order.cardNumber %></p>
+            </div>
+        </div>
+        <a href="/user/home/<%= order.email %>" class="btn btn-primary btn-home">Home</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

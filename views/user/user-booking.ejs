@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #111;
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.8em;
+            color: #fff !important;
+            transition: font-size 0.3s, color 0.3s;
+        }
+
+        .navbar-brand:hover {
+            font-size: 2em;
+            color: #ff4757 !important;
+        }
+
+        .nav-link {
+            font-size: 1.2em;
+            color: #fff !important;
+            transition: font-size 0.3s, color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #333;
+            border-radius: 5px;
+            font-size: 1.4em;
+        }
+
+        .container {
+            margin-top: 20px;
+            max-width: 800px;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .hotel-details img {
+            border-radius: 10px;
+            margin-right: 20px;
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .hotel-details:hover img {
+            transform: scale(1.05);
+        }
+
+        .form-section h4 {
+            color: #fff;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #bbb;
+        }
+
+        .form-control {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .form-control:focus {
+            background-color: #444;
+            color: #fff;
+            border-color: #ff4757;
+        }
+
+        .btn-primary {
+            background-color: #ff4757;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff6b81;
+            transform: scale(1.05);
+        }
+
+        .btn-outline-success {
+            color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #28a745;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#">Hotel Rooms</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/user/user-index">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/orders">Orders</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/user-whistlist">Wishlist</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/log-out">Log out</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+    <div class="container">
+        <h2>Book Your Stay</h2>
+
+        <% hotels.forEach(hotel => { %>
+        <div class="hotel-details d-flex mb-4">
+            <img src="/uploads/<%= hotel.photo %>" alt="Hotel Image">
+            <div>
+                <h3><%= hotel.name %></h3>
+                <p><strong>Price:</strong> $<%= hotel.price %></p>
+            </div>
+        </div>
+        <% }); %>
+
+        <form action="/user/book-hotel" method="POST">
+            <% hotels.forEach(hotel => { %>
+            <input type="hidden" name="hotelId" value="<%= hotel.id %>">
+            <input type="hidden" name="hotelName" value="<%= hotel.name %>">
+            <input type="hidden" name="hotelPrice" value="<%= hotel.price %>">
+            <% }); %>
+
+            <div class="form-section mb-4">
+                <h4>Guest Information</h4>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                </div>
+            </div>
+
+            <div class="form-section mb-4">
+                <h4>Booking Details</h4>
+                <div class="form-group">
+                    <label for="checkInDate">Check-in Date</label>
+                    <input type="date" class="form-control" id="checkInDate" name="checkInDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkOutDate">Check-out Date</label>
+                    <input type="date" class="form-control" id="checkOutDate" name="checkOutDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="roomType">Room Type</label>
+                    <select class="form-control" id="roomType" name="roomType" required>
+                        <option value="single">Single</option>
+                        <option value="double">Double</option>
+                        <option value="suite">Suite</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="numGuests">Number of Guests</label>
+                    <input type="number" class="form-control" id="numGuests" name="numGuests" min="1" required>
+                </div>
+            </div>
+
+            <div class="form-section mb-4">
+                <h4>Payment Information</h4>
+                <div class="form-group">
+                    <label for="cardName">Name on Card</label>
+                    <input type="text" class="form-control" id="cardName" name="cardName" required>
+                </div>
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Book Now</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core[_{{{CITATION{{{_1{](https://github.com/NicolaBuomp/php-hotel-crud/tree/5b22ae1e589f59cc668aeab626862a1150d19eae/partials%2Ftemplates%2Fhead_templates.php)[_{{{CITATION{{{_2{](https://github.com/harshita26/Hotel-Management/tree/c3a7077c219a8e5c1617ea80d0e85fc9ace226ba/index.php)[_{{{CITATION{{{_3{](https://github.com/EWCMF/laravel-cloudstorage/tree/eb9f382563b4faaa619fb988fa37705013a8d38d/resources%2Fviews%2Flayouts%2Fapp.blade.php)[_{{{CITATION{{{_4{](https://github.com/muhammadnassuha/dompetdonasi/tree/8eea83b795f2efb9800528ea0d75534a401acdfd/login_user%2Fall_campaign_user%2Findex.php)[_{{{CITATION{{{_5{](https://github.com/Agilbay04/VLMS-JTI/tree/ac9dee3ecf421da62ff9cf5b76dee9de633b83de/bootstrap-4.6.0%2Fsite%2Fcontent%2Fdocs%2F4.6%2Fcomponents%2Fnavbar.md)[_{{{CITATION{{{_6{](https://github.com/hiranEranda/db_project/tree/ce64d303dff24c9b5d9e7914e196ff59160386ea/Ceylon%20Smart%20Consumer%2Fad-comp.php)[_{{{CITATION{{{_7{](https://github.com/ijcharly/Oralia/tree/81a67d78873dee45e8c1f3cc2ab1d65517472a3f/Modelados%2FProyectoModelados%2FCategorias%2FInicioCaseras.php)[_{{{CITATION{{{_8{](https://github.com/sahandian/4320FinalProject/tree/eea9baf9b1bbe6e9d59c0e39d39c0d80a97deeb7/PenguinsCapitals.php)[_{{{CITATION{{{_9{](https://github.com/DavidHJR97/bank-account-app/tree/8b68cc8c1f29a4e3fe5a94a4e2589abab0f72114/view%2Fregister.php)[_{{{CITATION{{{_10{](https://github.com/FNVI/Authentication/tree/a09e003cb1dc2a8851bf028d1eb65784ad55a169/examples%2Fregular%2Fsignup.php)[_{{{CITATION{{{_11{](https://github.com/vivi-et/bbayouaws/tree/b98fc842a5039d450ff53943f111e7be30dd76ca/resources%2Fviews%2Fsession%2Fcreate.blade.php)[_{{{CITATION{{{_12{](https://github.com/rkustas/techarticles/tree/598d65a5c026d9ecd3c7f0258f4a44f93e7029d0/client%2Fpages%2F_document.js)

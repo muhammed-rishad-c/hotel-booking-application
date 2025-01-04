@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Index</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #eee;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #111;
+            padding: 1.5rem;
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            font-size: 1.5rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .navbar-brand:hover {
+            color: #ffc107 !important;
+            transform: scale(1.1);
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-size: 1.3rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        .container {
+            margin-top: 2rem;
+            color: #eee;
+        }
+
+        .hotel-card {
+            position: relative;
+            background-color: #222;
+            border: 1px solid #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #eee;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .hotel-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .hotel-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 1rem;
+        }
+
+        .hotel-info h3 {
+            color: #ffc107;
+            margin-bottom: 0.5rem;
+        }
+
+        .hotel-info p {
+            margin: 0.25rem 0;
+        }
+
+        .btn-upload {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #111;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-upload:hover {
+            background-color: #ffc107;
+            color: #111;
+            transform: scale(1.05);
+        }
+
+        .delete-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .delete-icon:hover {
+            color: #ff0000;
+        }
+
+        .no-hotels {
+            text-align: center;
+            margin-top: 2rem;
+            color: #bbb;
+        }
+
+        a:hover {
+            text-decoration: none !important;
+            color: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Admin Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/admin-index">Home</a>
+                </li>
+            </ul>
+            <form class="form-inline">
+                <a href="/admin/upload" class="btn btn-upload mr-2">Upload Post</a>
+                <a href="/admin/orders" class="btn btn-upload mr-2">Check Order</a>
+                <a href="/admin/logout" class="btn btn-upload">Logout</a>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <% if (hotels.length === 0) { %>
+        <div class="no-hotels">No posts are here.</div>
+        <% } else { %>
+        <% hotels.forEach(hotel => { %>
+        <a href="/admin/edit/<%= hotel.id %>" class="hotel-card">
+            <button class="delete-icon" data-id="<%= hotel.id %>">
+                <i class="fas fa-trash"></i>
+            </button>
+            <img src="/uploads/<%= hotel.photo %>" alt="Hotel Image">
+            <div class="hotel-info">
+                <h3><%= hotel.name %></h3>
+                <p><strong>Description:</strong> <%= hotel.description %></p>
+                <p><strong>Price:</strong> $<%= hotel.price %></p>
+                <p><strong>Location:</strong> <%= hotel.location %></p>
+            </div>
+        </a>
+        <% }); %>
+        <% } %>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.delete-btn').click(function () {
+                const hotelId = $(this).data('id');
+                const card = $(this).closest('.hotel-card');
+
+                $.ajax({
+                    url: '/admin/delete-hotel',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ hotelId: hotelId }),
+                    success: function (response) {
+                        if (response.success) {
+                            card.remove();
+                        } else {
+                            alert('Error deleting item.');
+                        }
+                    },
+                    error: function () {
+                        alert('Error deleting item.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

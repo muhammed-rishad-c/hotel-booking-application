@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Signup</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-form {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .signup-form:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .signup-form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .signup-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #bbb;
+        }
+
+        .signup-form input[type="text"],
+        .signup-form input[type="tel"],
+        .signup-form input[type="email"],
+        .signup-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #444;
+            color: #fff;
+        }
+
+        .signup-form input[type="text"]:focus,
+        .signup-form input[type="tel"]:focus,
+        .signup-form input[type="email"]:focus,
+        .signup-form button:focus {
+            outline: none;
+            background-color: #555;
+            border-color: #ff4757;
+        }
+
+        .signup-form button {
+            background-color: #ff4757;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .signup-form button:hover {
+            background-color: #ff6b81;
+            transform: scale(1.05);
+        }
+
+        .login-link {
+            display: block;
+            margin-top: 20px;
+            color: #ff4757;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .login-link:hover {
+            text-decoration: none;
+            color: #ff6b81;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-form">
+        <h2>User Signup</h2>
+        <form action="/user/usersignup" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <button type="submit">Signup</button>
+        </form>
+        <a href="/user/user-login" class="login-link">Already have an account? Log in here.</a>
+    </div>
+</body>
+
+</html>
